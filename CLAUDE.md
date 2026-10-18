@@ -20,6 +20,49 @@ TOPICS.md 是本仓选题的**唯一真相源**。以下三条每次运行都适
 `class="en">[一-鿿]` / `class="name-en">[一-鿿]` / `class="name-zh">[一-鿿]` / `class="cn">[一-鿿]` / `Reflections — [一-鿿]` / `class="lang-tag">ZH`
 命中就修掉（删中文节点或译成英文）再 publish。**正常情况不算泄漏**：经文/古典原典+英译、孙子兵法原文+英译、term(中文) 括注、代码/分词演示、语言切换标签『中文』、主题本身是中文的页。
 
+## 4. 页面结构补充：越界 + 十条要点（2026-10-17 起）
+
+本仓每期页面是 header → `.intro` → 若干张 `.card`（要点 01…）→ `.think`「深入思考」→ footer。**2026-10-17 起**，在最后一张 `.card` 之后、`.think`「深入思考」之前，依次加下面两节（中文页和 `.en.html` 都要有；本条优先于 routine prompt 里旧的页面结构清单）：
+
+1. **越界 · 跨学科的联想**（2026-10-17 起，**必写，3–5 条**；英文页标题 `Crossovers`）：本期讲的某个审美/艺术想法，和另一个领域里的什么东西是**同一个结构**——像在哪、不像在哪。**每条约 60–90 字（一两句）**，只有展开的那 1 条可到约 120 字。往读者的深度兴趣挂：意识、佛学、量子力学、神经科学、东西方哲学、心理学、生物进化、复杂性科学、分布式系统；旁支领导力、投资、商业。**别挂回艺术/美学本身**（卡片里的「中西对读」、别的艺术门类都不算越界）。具体研究、人物、年份必须真实准确，拿不准就换一条。卡片正文里点名引用过的东西留在正文；我们自己联想到的才进越界，**不与卡片里已写的联想重复**。
+2. **十条要点**（2026-10-17 起，**必写，正好 10 条**；英文页标题 `Ten takeaways`）：读者拿它直接记笔记。每条一句完整的话，约 20–45 字，**单独抄出去也能看懂**：写出作品名、艺术家名和概念名，不用「它」「这幅画」「这种手法」这类要靠上下文的代词。**人名不必每条都当主语开头**：全组里主角的名字出现两三次就够，其余各条直接写观点、机制或事实。覆盖各张卡片最值得记的观点和「精髓」，可含越界里的一两条；顺序跟正文走。**只总结正文已经写过的东西**，不加新信息，不放引语。
+
+骨架（标题用 h2，和 `.think` 同一个层级；英文页把两个 h2 换成 `Crossovers` / `Ten takeaways`）：
+
+```html
+<div class="tail">
+<h2>越界 · 跨学科的联想</h2>
+<div class="crossx"><ul>
+<li><b>学科 · 概念/人物</b>：……</li>
+</ul></div>
+</div>
+<div class="tail">
+<h2>十条要点</h2>
+<ol class="takeaways">
+<li>……</li>
+</ol>
+</div>
+```
+
+CSS（2026-10-17 起）：本仓没有 TEMPLATE，样式写在每页内联 `<style>` 里。新页面把下面这段**原样追加到 `<style>` 末尾**（照常写浅色，深色交给 `darken.py`；越界框用靛蓝区别于本站朱红，十条要点用本站主色朱红 #9b2d30）：
+
+```css
+.tail{background:#fff;border-radius:12px;box-shadow:0 1px 10px rgba(0,0,0,0.05);padding:28px;margin-top:34px}
+.tail h2{color:#9b2d30;font-size:1.3rem;margin-bottom:14px}
+.crossx{border:1px solid rgba(74,91,160,0.3);border-radius:12px;padding:6px 22px;background:rgba(74,91,160,0.05)}
+.crossx ul{list-style:none;margin-left:0}
+.crossx li{margin:14px 0;font-size:0.95rem;line-height:1.8}
+.crossx b{color:#4a5ba0}
+.takeaways{counter-reset:tk;list-style:none;margin:0;padding:0;border:1px solid rgba(155,45,48,0.28);border-radius:12px;background:rgba(155,45,48,0.04)}
+.takeaways li{counter-increment:tk;position:relative;margin:0;padding:11px 18px 11px 52px;border-top:1px solid rgba(155,45,48,0.12);font-size:0.95rem;line-height:1.75}
+.takeaways li:first-child{border-top:none}
+.takeaways li::before{content:counter(tk,decimal-leading-zero);position:absolute;left:18px;top:12px;font-family:"SF Mono",Menlo,monospace;font-size:0.78rem;color:#9b2d30}
+```
+
+篇幅（2026-10-17 起）：越界约 400 字、十条要点约 350 字。`.maxchars` 由 3500 上调到 4250，**上调的 750 字只给这两节**；卡片和「深入思考」的篇幅维持原样，别因为上限变宽就把正文写长。
+
+`publish.sh` 会对**从未提交过的新页面**检查：`<ol class="takeaways">` 正好 10 个 `<li>`，`<div class="crossx">` 里 3–5 个 `<li>`。旧页面不补这两节。
+
 
 ## index 维护：roadmap-first（写时把灰色占位转成链接，勿 append 重复）
 
